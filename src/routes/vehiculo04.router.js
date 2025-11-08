@@ -1,0 +1,13 @@
+const express = require('express');
+const c = require('../controllers/vehiculo04.controller');
+
+const router = express.Router();
+
+// ❗ OJO: NO llames c.getAll() — pásalo como referencia
+router.get('/', c.getAll);
+router.get('/:id', c.getOne);
+router.post('/', c.create);
+router.put('/:id', c.update);
+router.delete('/:id', c.remove);
+
+module.exports = router;
