@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Editar Vehículo</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="/">🏠 Inicio</a>
+      <a href="/vehiculos">🔎 Ver Datos</a>
+      <a href="/vehiculos/create">➕ Ingresar</a>
+    </nav>
+  </header>
+
+  <h1>Editar Vehículo #<%= v.id %></h1>
+  <div class="container-center">
+    <section class="form-panel">
+      <form action="/vehiculos/<%= v.id %>?_method=PUT" method="post">
+        <label>Marca</label><input name="marca" value="<%= v.marca %>" required>
+        <label>Modelo</label><input name="modelo" value="<%= v.modelo %>" required>
+        <label>Precio</label><input name="precio" type="number" step="0.01" value="<%= v.precio %>" required>
+        <label>Cantidad</label><input name="cantidad" type="number" min="0" value="<%= v.cantidad %>" required>
+        <button type="submit">Actualizar</button>
+        <a href="/vehiculos">Cancelar</a>
+      </form>
+    </section>
+  </div>
+</body>
+</html>

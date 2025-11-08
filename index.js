@@ -6,41 +6,28 @@ const methodOverride = require('method-override');
 
 const app = express();
 
-/* ---------- Middlewares ---------- */
-app.use(express.json());
+// Middlewares
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 
-/* ---------- Vistas ---------- */
+// Vistas
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'src', 'views'));
 
-/* ---------- Rutas de páginas (EJS) ---------- */
-app.use('/', require('./src/routes/main.routes'));
-app.use('/vehiculos', require('./src/routes/vehiculo04.pages.router'));
-app.use('/api/vehiculos', require('./src/routes/vehiculo04.router'));
+// Rutas
+const mainRouter       = require('./src/routes/main.routes');
+const vehiculoPages    = require('./src/routes/vehiculo04.pages.router'); // vistas
+const vehiculoApi      = require('./src/routes/vehiculo04.router');       // API JSON (opcional)
 
-/* ---------- (Opcional) Rutas API JSON ----------
-   Se montan sólo si el archivo existe, para evitar MODULE_NOT_FOUND */
-const safeUse = (mount, routerPath) => {
-  try {
-    app.use(mount, require(routerPath));
-  } catch (e) {
-    if (e.code === 'MODULE_NOT_FOUND') {
-      console.warn(`[skip] ${routerPath} no existe — omitiendo ${mount}`);
-    } else {
-      throw e;
-    }
-  }
-};
-safeUse('/api/vehiculos', './src/routes/vehiculo04.router'); // crea este archivo si quieres API
-safeUse('/fisica', './src/routes/fisica.router');            // comenta si no lo usas
-const port = process.env.PORT || process.env.port || 3001;
-app.listen(port, () => console.log(`http://localhost:${port}`));
+app.use('/', mainRouter);
 
+// Acepta /vehiculos y /vehiculos04 por si el enunciado lo requiere
+app.use(['/vehiculos', '/vehiculos04'], vehiculoPages);
 
-app.use((req, res) => res.status(404).send('Not Found'));
+// API JSON opcional
+app.use('/api/vehiculos', vehiculoApi);
 
-const port = process.env.PORT || 3001;
+const port = Number(process.env.PORT || process.env.port || 3001);
 app.listen(port, () => console.log(`http://localhost:${port}`));

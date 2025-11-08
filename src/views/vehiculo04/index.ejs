@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vehículos</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="/">🏠 Inicio</a>
+      <a href="/vehiculos">🔎 Ver Datos</a>
+      <a href="/vehiculos/create">➕ Ingresar</a>
+    </nav>
+  </header>
+
+  <h1>Vehículos</h1>
+  <div class="container-center">
+    <section class="table-panel">
+      <table>
+        <thead>
+          <tr><th>ID</th><th>Marca</th><th>Modelo</th><th>Precio</th><th>Cantidad</th><th>Acciones</th></tr>
+        </thead>
+        <tbody>
+          <% if (!vehiculos || vehiculos.length === 0) { %>
+            <tr><td colspan="6">Sin registros</td></tr>
+          <% } else { vehiculos.forEach(v => { %>
+            <tr>
+              <td><%= v.id %></td>
+              <td><%= v.marca %></td>
+              <td><%= v.modelo %></td>
+              <td><%= v.precio %></td>
+              <td><%= v.cantidad %></td>
+              <td>
+                <a href="/vehiculos/<%= v.id %>">Ver</a> |
+                <a href="/vehiculos/<%= v.id %>/edit">Editar</a> |
+                <form action="/vehiculos/<%= v.id %>?_method=DELETE" method="post" style="display:inline">
+                  <button type="submit" onclick="return confirm('¿Eliminar?')">Eliminar</button>
+                </form>
+              </td>
+            </tr>
+          <% }) } %>
+        </tbody>
+      </table>
+    </section>
+  </div>
+</body>
+</html>

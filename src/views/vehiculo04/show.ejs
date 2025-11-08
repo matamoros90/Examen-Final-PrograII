@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Detalle Vehículo</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="/">🏠 Inicio</a>
+      <a href="/vehiculos">🔎 Ver Datos</a>
+      <a href="/vehiculos/create">➕ Ingresar</a>
+    </nav>
+  </header>
+
+  <h1>Detalle Vehículo</h1>
+  <div class="container-center">
+    <section class="form-panel">
+      <ul>
+        <li><b>ID:</b> <%= v.id %></li>
+        <li><b>Marca:</b> <%= v.marca %></li>
+        <li><b>Modelo:</b> <%= v.modelo %></li>
+        <li><b>Precio:</b> <%= v.precio %></li>
+        <li><b>Cantidad:</b> <%= v.cantidad %></li>
+      </ul>
+      <p>
+        <a href="/vehiculos/<%= v.id %>/edit">Editar</a> |
+        <a href="/vehiculos">Volver</a>
+      </p>
+    </section>
+  </div>
+</body>
+</html>
